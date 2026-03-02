@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Game Hub</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #0f0f0f;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 50px;
+            margin: 0;
+        }
+
+        h1 { color: #00ff88; text-shadow: 0 0 10px rgba(0,255,136,0.3); }
+
+        .portfolio-container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .card {
+            background: #1a1a1a;
+            border: 2px solid #333;
+            border-radius: 15px;
+            padding: 20px;
+            width: 280px;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            border-color: #00ff88;
+            transform: translateY(-10px);
+        }
+
+        .play-btn {
+            display: inline-block;
+            background: #00ff88;
+            color: black;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        /* Star Rating CSS */
+        .rating-box {
+            margin-top: 10px;
+            padding: 10px;
+            background: #252525;
+            border-radius: 10px;
+        }
+
+        .fa-star {
+            font-size: 20px;
+            color: #444;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .fa-star.hover, .fa-star.selected {
+            color: #f1c40f;
+            text-shadow: 0 0 5px rgba(241, 196, 15, 0.5);
+        }
+
+        .status-msg {
+            font-size: 12px;
+            margin-top: 5px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>My Game Collection</h1>
+    <p>Select a game to play and leave a rating!</p>
+
+    <div class="portfolio-container">
+        
+        <div class="card" data-game="tictactoe">
+            <h2>Tic-Tac-Toe</h2>
+            <p>Strategy for two players.</p>
+            <a href="index.html" class="play-btn">Play Now</a>
+            
+            <div class="rating-box">
+                <i class="fa-solid fa-star" data-value="1"></i>
+                <i class="fa-solid fa-star" data-value="2"></i>
+                <i class="fa-solid fa-star" data-value="3"></i>
+                <i class="fa-solid fa-star" data-value="4"></i>
+                <i class="fa-solid fa-star" data-value="5"></i>
+                <div class="status-msg">Rate this game</div>
+            </div>
+        </div>
+
+        <div class="card" data-game="snake">
+            <h2>Snake Game</h2>
+            <p>Classic arcade action.</p>
+            <a href="snake-game/index.html" class="play-btn">Play Now</a>
+            
+            <div class="rating-box">
+                <i class="fa-solid fa-star" data-value="1"></i>
+                <i class="fa-solid fa-star" data-value="2"></i>
+                <i class="fa-solid fa-star" data-value="3"></i>
+                <i class="fa-solid fa-star" data-value="4"></i>
+                <i class="fa-solid fa-star" data-value="5"></i>
+                <div class="status-msg">Rate this game</div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            
+            // Star Hover Logic
+            $('.fa-star').on('mouseenter', function() {
+                $(this).parent().find('.fa-star').removeClass('hover');
+                $(this).prevAll().addBack().addClass('hover');
+            });
+
+            $('.rating-box').on('mouseleave', function() {
+                $(this).find('.fa-star').removeClass('hover');
+            });
+
+            // Star Click Logic
+            $('.fa-star').on('click', function() {
+                let val = $(this).data('value');
+                let container = $(this).parent();
+                
+                // Set selected state
+                container.find('.fa-star').removeClass('selected');
+                $(this).prevAll().addBack().addClass('selected');
+                
+                // Update text
+                container.find('.status-msg').text("You gave this " + val + " stars!").css("color", "#00ff88");
+            });
+
+        });
+    </script>
+</body>
+</html>
